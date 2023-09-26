@@ -47,14 +47,6 @@ struct timespec get_time(){
 	return t;
 }
 
-long to_miliseconds(struct timespec t){
-	return (t.tv_sec * 1000 + t.tv_nsec / 100000);
-}
-
-long get_miliseconds(struct timespec begin, struct timespec end) {
-	return to_miliseconds(end) - to_miliseconds(begin);
-}
-
 long to_microseconds(struct timespec t) {
 	return (t.tv_sec * 1000000 + t.tv_nsec / 1000);
 }
@@ -62,18 +54,6 @@ long to_microseconds(struct timespec t) {
 long get_microseconds(struct timespec begin, struct timespec end) {
 	return to_microseconds(end) - to_microseconds(begin);
 }
-
-long get_nanoseconds(struct timespec* begin, struct timespec* end) {
-	long seconds = end->tv_sec - begin->tv_sec;
-	long nanoseconds = end->tv_nsec - begin->tv_nsec;
-	if(nanoseconds < 0){
-		seconds -= 1;
-        nanoseconds += 1000000000L;
-	}
-	return seconds * 1000000000L + nanoseconds;
-}
-
-
 
 void yield(void* context) {
 	struct my_context *ctx = context;
