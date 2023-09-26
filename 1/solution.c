@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <unistd.h>
 #include "libcoro.h"
 #include "mine.h"
 
@@ -40,39 +41,26 @@ my_context_delete(struct my_context *ctx)
 	free(ctx);
 }
 
-/**
- * A function, called from inside of coroutines recursively. Just to demonstrate
- * the example. You can split your code into multiple functions, that usually
- * helps to keep the individual code blocks simple.
- */
-static void
-other_function(const char *name, int depth)
-{
-	printf("%s: entered function, depth = %d\n", name, depth);
-	coro_yield();
-	if (depth < 3)
-		other_function(name, depth + 1);
+struct timespec get_time(){
+	struct timespec t;
+	clock_gettime(CLOCK_MONOTONIC, &t);
+	return t;
 }
 
-
-long get_miliseconds(struct timespec* begin, struct timespec* end) {
-	long seconds = end->tv_sec - begin->tv_sec;
-	long nanoseconds = end->tv_nsec - begin->tv_nsec;
-	if(nanoseconds < 0){
-		seconds -= 1;
-        nanoseconds += 1000000000L;
-	}
-	return seconds * 1000 + nanoseconds / 1000000;
+long to_miliseconds(struct timespec t){
+	return (t.tv_sec * 1000 + t.tv_nsec / 100000);
 }
 
-long get_microseconds(struct timespec* begin, struct timespec* end) {
-	long seconds = end->tv_sec - begin->tv_sec;
-	long nanoseconds = end->tv_nsec - begin->tv_nsec;
-	if(nanoseconds < 0){
-		seconds -= 1;
-        nanoseconds += 1000000000L;
-	}
-	return seconds * 1000000 + nanoseconds / 1000;
+long get_miliseconds(struct timespec begin, struct timespec end) {
+	return to_miliseconds(end) - to_miliseconds(begin);
+}
+
+long to_microseconds(struct timespec t) {
+	return (t.tv_sec * 1000000 + t.tv_nsec / 1000);
+}
+
+long get_microseconds(struct timespec begin, struct timespec end) {
+	return to_microseconds(end) - to_microseconds(begin);
 }
 
 long get_nanoseconds(struct timespec* begin, struct timespec* end) {
@@ -85,16 +73,19 @@ long get_nanoseconds(struct timespec* begin, struct timespec* end) {
 	return seconds * 1000000000L + nanoseconds;
 }
 
+
+
 void yield(void* context) {
 	struct my_context *ctx = context;
-	struct timespec cur_time;
-	clock_gettime(CLOCK_MONOTONIC, &cur_time);
-	long time_passed = get_microseconds(&ctx->start_time, &cur_time);
+	struct timespec cur_time = get_time();
+	long time_passed = get_microseconds(ctx->start_time, cur_time);
 	// printf("%s: time_passed: %ld, quota: %ld\n", ctx->name, time_passed, ctx->quota);
 	if(time_passed >= ctx->quota){
+		// printf("	yield %s:  worktime: %ldµs,  time_passed: %ldµs,  start_time: %ldµs,  cur_time: %ldµs\n", ctx->name, ctx->worktime, time_passed, to_microseconds(ctx->start_time), to_microseconds(cur_time));
 		ctx->worktime += time_passed;
 		coro_yield();
 		ctx->start_time = cur_time;
+		// printf("		back to %s\n", ctx->name);
 	}
 }
 
@@ -109,19 +100,27 @@ coroutine_func_f(void *context)
 
 	struct coro *this = coro_this();
 	struct my_context *ctx = context;
-	clock_gettime(CLOCK_MONOTONIC, &ctx->start_time);
+	ctx->start_time = get_time();
 	char *name = ctx->name;
 	printf("Started coroutine %s\n", name);
 	struct file* f = ctx->f;
 	while(f != NULL){
 		f = get_unsorted_file(f);
 		if(f != NULL){
+			// printf("=== %s: ", name);
+			// describe_file(f);
 			sort_file(f, yield, context);
+			// printf(" * * * %s: worktime: %ld, time_passed: %ldµs, finished: ", name, ctx->worktime, get_microseconds(ctx->start_time, get_time()));
+			// describe_file(f);
 		} else{
 			break;
 		}
 		yield(context);
 	}
+	struct timespec cur_time = get_time();
+	ctx->worktime += get_microseconds(ctx->start_time, cur_time);
+	ctx->start_time = cur_time;
+
 	printf("%s: switch count %lld\n", name, coro_switch_count(this));
 	printf("%s: worktime: %ldµs\n", name, ctx->worktime);
 
@@ -133,30 +132,59 @@ coroutine_func_f(void *context)
 int
 main(int argc, char **argv)
 {
-	struct timespec start_time, end_time;
-	clock_gettime(CLOCK_MONOTONIC, &start_time);
-
-	struct file* head = NULL;
-	
-    for(int i = 1; i < argc; i++ ){
-        struct file* f = create_file(argv[i]);
-        add_file(&head, f);
-    }
-
-	/* Initialize o	ur coroutine global cooperative scheduler. */
-	coro_sched_init();
+	struct timespec start_time = get_time();
 
 	// latency in µs (microseconds). 1000000µs = 1s. 
-	long T = 30000; 
+	long T = 0;
+	// number of coroutines
+	int N = 0; 
+
+	int opt;
+	const char* short_options = "n:t:h";
+    while ((opt = getopt(argc, argv, short_options)) != -1) {
+        switch (opt) {
+            case 'n':
+				N = atoi(optarg);
+				break;
+			case 't':
+				T = atoi(optarg);
+				break;
+            case 'h':
+            default:
+                printf("Usage: %s -n <number_of_coroutines> -t <total_latency>  <file_1> ... <file_k>\n", argv[0]);
+                exit(EXIT_SUCCESS);
+        }
+    }
+	if(T <= 0){
+		printf("T (latency) must be greater than 0\n");
+		return EXIT_FAILURE;
+	}
+	if(N <= 0){
+		printf("N (latency) must be greater than 0\n");
+		return EXIT_FAILURE;
+	}
+
+	struct file* head = NULL;
+    if (optind < argc) {
+        for (int i = optind; i < argc; i++) {
+            struct file* f = create_file(argv[i]);
+        	add_file(&head, f);
+        }
+    }
+	 
 	printf("Latency: T=%ldµs\n", T);
 
-	// number of coroutines
-	int N = 6; 
 	printf("Coroutines: N=%d\n", N);
 
 	printf("Quota: T/N=%ldµs\n", (T/N));
 
 	printf("\n");
+
+	/* Initialize o	ur coroutine global cooperative scheduler. */
+	coro_sched_init();
+
+	
+	
 	/* Start several coroutines. */
 	for (int i = 0; i < N; ++i) {
 		/*
@@ -201,11 +229,11 @@ main(int argc, char **argv)
 	// delete sorted elements after writing to the fiel;
 	free_vector(sorted_elements);
 	
-	clock_gettime(CLOCK_MONOTONIC, &end_time);
+	struct timespec end_time = get_time();
 
 	// printf("start_time: %lds, %ldns\n", start_time.tv_sec, start_time.tv_nsec);
 	// printf("end_time: %lds, %ldns\n", end_time.tv_sec, end_time.tv_nsec);
-	printf("\nTime elapsed: %ldµs\n", get_microseconds(&start_time, &end_time));
+	printf("\nTime elapsed: %ldµs\n", get_microseconds(start_time, end_time));
 	return 0;
 
 }

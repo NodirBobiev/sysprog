@@ -36,15 +36,20 @@ void sort(int*src, int size, yield_f func, void* arg){
     int* left = copy(src, lsize);
     int* right = copy(src + lsize, rsize);
 
+    
+
     sort(left, lsize, func, arg);
+
+    func(arg);
+
     sort(right, rsize, func, arg);
     
     merge(src, left, lsize, right, rsize);
     
-    free(left);
-    free(right);
-
     func(arg);
+
+    free(left);
+    free(right);    
 }
 
 struct vector{
