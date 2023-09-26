@@ -77,14 +77,13 @@ long get_nanoseconds(struct timespec* begin, struct timespec* end) {
 
 void yield(void* context) {
 	struct my_context *ctx = context;
-	struct timespec cur_time = get_time();
-	long time_passed = get_microseconds(ctx->start_time, cur_time);
+	long time_passed = get_microseconds(ctx->start_time, get_time());
 	// printf("%s: time_passed: %ld, quota: %ld\n", ctx->name, time_passed, ctx->quota);
 	if(time_passed >= ctx->quota){
 		// printf("	yield %s:  worktime: %ldµs,  time_passed: %ldµs,  start_time: %ldµs,  cur_time: %ldµs\n", ctx->name, ctx->worktime, time_passed, to_microseconds(ctx->start_time), to_microseconds(cur_time));
 		ctx->worktime += time_passed;
 		coro_yield();
-		ctx->start_time = cur_time;
+		ctx->start_time = get_time();
 		// printf("		back to %s\n", ctx->name);
 	}
 }
