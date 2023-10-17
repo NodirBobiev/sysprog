@@ -58,6 +58,7 @@ execute_command_line(const struct command_line *line)
 			if (e->next != NULL){
 				execute_command(e->cmd, input_fd, fds[1]);
 			}else{
+				
 				execute_command(e->cmd, input_fd, STDOUT_FILENO);
 			}
 			close(fds[1]);
@@ -150,99 +151,3 @@ main(void)
 	parser_delete(p);
 	return 0;
 }
-/*
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include <sys/types.h>
-
-void execute_command(char **args) {
-    pid_t pid;
-
-    if ((pid = fork()) < 0) {
-        perror("Fork failed");
-        exit(1);
-    }
-
-    if (pid == 0) {
-        if (execvp(args[0], args) == -1) {
-            perror("Command execution failed");
-            exit(1);
-        }
-    } else {
-        wait(NULL);
-    }
-}
-
-void pipe_and_execute(char **commands, int pipe_position, int count) {
-    char **command1 = &commands[0];
-    char **command2 = &commands[pipe_position + 1];
-
-    int pipe_fd[2];
-    pipe(pipe_fd);
-
-    if (fork() == 0) {
-        dup2(pipe_fd[1], STDOUT_FILENO);
-        close(pipe_fd[0]);
-        close(pipe_fd[1]);
-        execute_command(command1);
-    }
-
-    if (fork() == 0) {
-        dup2(pipe_fd[0], STDIN_FILENO);
-        close(pipe_fd[1]);
-        close(pipe_fd[0]);
-        execute_command(command2);
-    }
-
-    close(pipe_fd[0]);
-    close(pipe_fd[1]);
-
-    wait(NULL);
-    wait(NULL);
-}
-
-int main(void) {
-    char command[256];
-    char *args[64];
-    char token[64];
-    int arg_count;
-    char *p;
-
-    while (1) {
-        printf("$ ");
-        fgets(command, sizeof(command), stdin);
-        strtok(command, "\n");
-
-        arg_count = 0;
-        while ((p = strtok(arg_count == 0 ? command : NULL, " ")) != NULL) {
-            strcpy(token, p);
-            args[arg_count++] = strdup(token);
-        }
-        args[arg_count] = NULL;
-
-        if (strcmp(args[0], "exit") == 0) {
-            break;
-        }
-
-        int pipe_position = -1;
-        for (int i = 0; i < arg_count; i++) {
-            if (strcmp(args[i], "|") == 0) {
-                pipe_position = i;
-                break;
-            }
-        }
-
-        if (pipe_position != -1) {
-            args[pipe_position] = NULL;
-            pipe_and_execute(args, pipe_position, arg_count);
-        } else {
-            execute_command(args);
-        }
-    }
-
-    return 0;
-}
-*/
