@@ -99,8 +99,8 @@ void release_task(struct thread_task *task, void* result)
 		thread_task_delete(task);
 	}else{
 		task->state = TASK_RELEASED;
-		pthread_mutex_unlock(task->mutex);
 		pthread_cond_broadcast(task->cond);
+		pthread_mutex_unlock(task->mutex);
 	}
 }
 
@@ -201,10 +201,10 @@ thread_pool_delete(struct thread_pool *pool)
 		return TPOOL_ERR_HAS_TASKS;
 	}
 	pool->is_shutdown = true;
-	pthread_mutex_unlock(pool->mutex);
-
 	// broadcast to all threads that they should shutdown
 	pthread_cond_broadcast(pool->cond);
+	pthread_mutex_unlock(pool->mutex);
+
 	// join threads
 	for (int i = 0; i < pool->threads_count; i ++ ){
 		pthread_join(pool->threads[i], NULL);
@@ -278,10 +278,8 @@ thread_pool_push_task(struct thread_pool *pool, struct thread_task *task)
 	} // otherwise singal threads for a new task 
 	else{
 		// printf("*** push task->state %d \t task_count: %d\t thread_count: %d \t busy_threads_count: %d\n", task->state, pool->task_count, pool->threads_count, pool->busy_threads_count);
-		pthread_mutex_unlock(pool->mutex);
-		// printf("+++ push task->state %d \t task_count: %d\t thread_count: %d \t busy_threads_count: %d\n", task->state, pool->task_count, pool->threads_count, pool->busy_threads_count);
 		pthread_cond_signal(pool->cond);
-		// printf("=== push task->state %d \t task_count: %d\t thread_count: %d \t busy_threads_count: %d\n", task->state, pool->task_count, pool->threads_count, pool->busy_threads_count);
+		pthread_mutex_unlock(pool->mutex);
 		
 	}
 	// printf("<<< push task->state %d \t task_count: %d\t thread_count: %d \t busy_threads_count: %d\n", task->state, pool->task_count, pool->threads_count, pool->busy_threads_count);
