@@ -33,7 +33,7 @@ void *thread_worker(void *args_ptr)
     free(args_ptr);
 }
 
-void benchmark(const char *label, int threads_count, int distance)
+long long benchmark(const char *label, int threads_count, int distance)
 {
     pthread_t *threads = malloc(sizeof(pthread_t)*threads_count);
 
@@ -58,12 +58,49 @@ void benchmark(const char *label, int threads_count, int distance)
     printf("%-70s %lld ns \n", label, totalTime);
 
     free(threads);
+    return totalTime;
 }
 
+int compare(const void* a, const void* b) {
+    return (*(long long*)a - *(long long*)b) > 0;
+}
+void display(long long arr[], int len) {
+    qsort(arr, len, sizeof(long long), compare);
+    printf("min: %lld \t median: %lld \t max: %lld\n\n", arr[0], arr[len / 2], arr[len-1]);
+}
+
+struct bench_param{
+    const char* label;
+    int threads_count;
+    int distance;
+};
+
+struct bench_param parameters[]={
+    {"100 mln increments with 1 thread", 1, 1},
+    {"100 mln increments with 2 thread with close numbers", 2, 1},
+    {"100 mln increments with 2 thread with distant numbers", 2, 9},
+    {"100 mln increments with 3 thread with close numbers", 3, 1},
+    {"100 mln increments with 3 thread with distant numbers", 3, 9},
+};
+
+
 int main(){
-    benchmark("100 mln increments with 1 thread", 1, 1);
-    benchmark("100 mln increments with 2 thread with close numbers", 2, 1);
-    benchmark("100 mln increments with 2 thread with distant numbers", 2, 9);
-    benchmark("100 mln increments with 3 thread with close numbers", 3, 1);
-    benchmark("100 mln increments with 3 thread with distant numbers", 3, 9);
+    
+    
+    int N = sizeof(parameters) / sizeof(parameters[0]);
+
+
+    int M = 5;
+    for (int i = 0; i < N; i ++ ){
+        long long arr[M];
+        for (int j = 0; j < M; j ++ )
+            arr[j] = benchmark(parameters[i].label, parameters[i].threads_count, parameters[i].distance);
+        display(arr, 5);
+    }
+
+    // benchmark("100 mln increments with 1 thread", 1, 1);
+    // benchmark("100 mln increments with 2 thread with close numbers", 2, 1);
+    // benchmark("100 mln increments with 2 thread with distant numbers", 2, 9);
+    // benchmark("100 mln increments with 3 thread with close numbers", 3, 1);
+    // benchmark("100 mln increments with 3 thread with distant numbers", 3, 9);
 }
