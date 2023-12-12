@@ -47,7 +47,7 @@ void* thread_waiter(void *args)
 }
 
 
-void benchmark(const char* label, signal_f signal, int waiters_count)
+long long benchmark(const char* label, signal_f signal, int waiters_count)
 {
     mutex = (pthread_mutex_t*)malloc(sizeof(pthread_mutex_t));
     cond = (pthread_cond_t*)malloc(sizeof(pthread_cond_t));
@@ -84,18 +84,62 @@ void benchmark(const char* label, signal_f signal, int waiters_count)
     free(mutex);
     free(cond);
     free(threads);
+
+    return totalTime;
 }
 
+int compare(const void* a, const void* b) {
+    return (*(long long*)a - *(long long*)b) > 0;
+}
+void display(long long arr[], int len) {
+    qsort(arr, len, sizeof(long long), compare);
+    printf("min: %lld \t median: %lld \t max: %lld\n\n", arr[0], arr[len / 2], arr[len-1]);
+}
+
+struct bench_param{
+    const char* label;
+    signal_f signal;
+    int waiters_count;
+};
+
+struct bench_param parameters[]={
+    {"signal 1 wait-thread", pthread_cond_signal, 1},
+    {"broadcast 1 wait-thread", pthread_cond_broadcast, 1},
+
+    {"signal 2 wait-thread", pthread_cond_signal, 2},
+    {"broadcast 2 wait-thread", pthread_cond_broadcast, 2},
+
+    {"signal 3 wait-thread", pthread_cond_signal, 3},
+    {"broadcast 3 wait-thread", pthread_cond_broadcast, 3},
+
+    {"signal 4 wait-thread", pthread_cond_signal, 4},
+    {"broadcast 4 wait-thread", pthread_cond_broadcast, 4},
+};
+
 int main(){
-    benchmark("signal 1 wait-thread", pthread_cond_signal, 1);
-    benchmark("broadcast 1 wait-thread", pthread_cond_broadcast, 1);
 
-    benchmark("signal 2 wait-thread", pthread_cond_signal, 2);
-    benchmark("broadcast 2 wait-thread", pthread_cond_broadcast, 2);
+    int N = sizeof(parameters) / sizeof(parameters[0]);
 
-    benchmark("signal 3 wait-thread", pthread_cond_signal, 3);
-    benchmark("broadcast 3 wait-thread", pthread_cond_broadcast, 3);
 
-    benchmark("signal 4 wait-thread", pthread_cond_signal, 4);
-    benchmark("broadcast 4 wait-thread", pthread_cond_broadcast, 4);
+    int M = 5;
+    for (int i = 0; i < N; i ++ ){
+        long long arr[M];
+        for (int j = 0; j < M; j ++ )
+            arr[j] = benchmark(parameters[i].label, parameters[i].signal, parameters[i].waiters_count);
+        display(arr, 5);
+    }
+
+
+
+    // benchmark("signal 1 wait-thread", pthread_cond_signal, 1);
+    // benchmark("broadcast 1 wait-thread", pthread_cond_broadcast, 1);
+
+    // benchmark("signal 2 wait-thread", pthread_cond_signal, 2);
+    // benchmark("broadcast 2 wait-thread", pthread_cond_broadcast, 2);
+
+    // benchmark("signal 3 wait-thread", pthread_cond_signal, 3);
+    // benchmark("broadcast 3 wait-thread", pthread_cond_broadcast, 3);
+
+    // benchmark("signal 4 wait-thread", pthread_cond_signal, 4);
+    // benchmark("broadcast 4 wait-thread", pthread_cond_broadcast, 4);
 }
