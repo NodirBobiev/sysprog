@@ -1,0 +1,37 @@
+$ gcc false_sharing.c -o main && ./main
+100 mln increments with 1 thread                                       19063728 ns 
+100 mln increments with 1 thread                                       18899012 ns 
+100 mln increments with 1 thread                                       18866823 ns 
+100 mln increments with 1 thread                                       18079577 ns 
+100 mln increments with 1 thread                                       18186550 ns 
+min: 18079577 	 median: 18866823 	 max: 19063728
+
+100 mln increments with 2 thread with close numbers                    32977416 ns 
+100 mln increments with 2 thread with close numbers                    38379160 ns 
+100 mln increments with 2 thread with close numbers                    38677971 ns 
+100 mln increments with 2 thread with close numbers                    40168770 ns 
+100 mln increments with 2 thread with close numbers                    39465329 ns 
+min: 32977416 	 median: 38677971 	 max: 40168770
+
+100 mln increments with 2 thread with distant numbers                  18504833 ns 
+100 mln increments with 2 thread with distant numbers                  18395287 ns 
+100 mln increments with 2 thread with distant numbers                  18304872 ns 
+100 mln increments with 2 thread with distant numbers                  18593778 ns 
+100 mln increments with 2 thread with distant numbers                  18303594 ns 
+min: 18303594 	 median: 18395287 	 max: 18593778
+
+100 mln increments with 3 thread with close numbers                    66017788 ns 
+100 mln increments with 3 thread with close numbers                    60812620 ns 
+100 mln increments with 3 thread with close numbers                    64940842 ns 
+100 mln increments with 3 thread with close numbers                    59761653 ns 
+100 mln increments with 3 thread with close numbers                    65308818 ns 
+min: 59761653 	 median: 64940842 	 max: 66017788
+
+100 mln increments with 3 thread with distant numbers                  19895286 ns 
+100 mln increments with 3 thread with distant numbers                  19939688 ns 
+100 mln increments with 3 thread with distant numbers                  19993449 ns 
+100 mln increments with 3 thread with distant numbers                  19886295 ns 
+100 mln increments with 3 thread with distant numbers                  19858292 ns 
+min: 19858292 	 median: 19895286 	 max: 19993449
+
+

@@ -1,0 +1,71 @@
+$ gcc pthread_mutex_lock.c -o main && ./main
+threads_count: 1 	 ITERATIONS: 10000000 	 13.00 ns per lock/unlock pair
+threads_count: 1 	 ITERATIONS: 10000000 	 12.97 ns per lock/unlock pair
+threads_count: 1 	 ITERATIONS: 10000000 	 12.93 ns per lock/unlock pair
+threads_count: 1 	 ITERATIONS: 10000000 	 13.01 ns per lock/unlock pair
+threads_count: 1 	 ITERATIONS: 10000000 	 13.03 ns per lock/unlock pair
+min: 12.93 	 median: 13.00 	 max: 13.03
+
+threads_count: 2 	 ITERATIONS: 10000000 	 83.83 ns per lock/unlock pair
+threads_count: 2 	 ITERATIONS: 10000000 	 81.62 ns per lock/unlock pair
+threads_count: 2 	 ITERATIONS: 10000000 	 78.58 ns per lock/unlock pair
+threads_count: 2 	 ITERATIONS: 10000000 	 82.22 ns per lock/unlock pair
+threads_count: 2 	 ITERATIONS: 10000000 	 77.90 ns per lock/unlock pair
+min: 77.90 	 median: 81.62 	 max: 83.83
+
+threads_count: 3 	 ITERATIONS: 10000000 	 44.49 ns per lock/unlock pair
+threads_count: 3 	 ITERATIONS: 10000000 	 48.61 ns per lock/unlock pair
+threads_count: 3 	 ITERATIONS: 10000000 	 48.47 ns per lock/unlock pair
+threads_count: 3 	 ITERATIONS: 10000000 	 46.95 ns per lock/unlock pair
+threads_count: 3 	 ITERATIONS: 10000000 	 48.63 ns per lock/unlock pair
+min: 44.49 	 median: 48.47 	 max: 48.63
+
+threads_count: 4 	 ITERATIONS: 10000000 	 64.97 ns per lock/unlock pair
+threads_count: 4 	 ITERATIONS: 10000000 	 64.14 ns per lock/unlock pair
+threads_count: 4 	 ITERATIONS: 10000000 	 66.15 ns per lock/unlock pair
+threads_count: 4 	 ITERATIONS: 10000000 	 63.59 ns per lock/unlock pair
+threads_count: 4 	 ITERATIONS: 10000000 	 66.57 ns per lock/unlock pair
+min: 63.59 	 median: 64.97 	 max: 66.57
+
+threads_count: 5 	 ITERATIONS: 10000000 	 82.20 ns per lock/unlock pair
+threads_count: 5 	 ITERATIONS: 10000000 	 78.32 ns per lock/unlock pair
+threads_count: 5 	 ITERATIONS: 10000000 	 78.09 ns per lock/unlock pair
+threads_count: 5 	 ITERATIONS: 10000000 	 79.98 ns per lock/unlock pair
+threads_count: 5 	 ITERATIONS: 10000000 	 82.55 ns per lock/unlock pair
+min: 78.09 	 median: 79.98 	 max: 82.55
+
+threads_count: 6 	 ITERATIONS: 10000000 	 101.99 ns per lock/unlock pair
+threads_count: 6 	 ITERATIONS: 10000000 	 153.96 ns per lock/unlock pair
+threads_count: 6 	 ITERATIONS: 10000000 	 150.94 ns per lock/unlock pair
+threads_count: 6 	 ITERATIONS: 10000000 	 148.79 ns per lock/unlock pair
+threads_count: 6 	 ITERATIONS: 10000000 	 144.58 ns per lock/unlock pair
+min: 101.99 	 median: 148.79 	 max: 153.96
+
+threads_count: 7 	 ITERATIONS: 10000000 	 160.02 ns per lock/unlock pair
+threads_count: 7 	 ITERATIONS: 10000000 	 159.71 ns per lock/unlock pair
+threads_count: 7 	 ITERATIONS: 10000000 	 158.97 ns per lock/unlock pair
+threads_count: 7 	 ITERATIONS: 10000000 	 158.39 ns per lock/unlock pair
+threads_count: 7 	 ITERATIONS: 10000000 	 159.05 ns per lock/unlock pair
+min: 158.39 	 median: 159.05 	 max: 160.02
+
+threads_count: 8 	 ITERATIONS: 10000000 	 157.87 ns per lock/unlock pair
+threads_count: 8 	 ITERATIONS: 10000000 	 160.59 ns per lock/unlock pair
+threads_count: 8 	 ITERATIONS: 10000000 	 159.56 ns per lock/unlock pair
+threads_count: 8 	 ITERATIONS: 10000000 	 159.16 ns per lock/unlock pair
+threads_count: 8 	 ITERATIONS: 10000000 	 159.18 ns per lock/unlock pair
+min: 157.87 	 median: 159.18 	 max: 160.59
+
+threads_count: 9 	 ITERATIONS: 10000000 	 156.57 ns per lock/unlock pair
+threads_count: 9 	 ITERATIONS: 10000000 	 151.35 ns per lock/unlock pair
+threads_count: 9 	 ITERATIONS: 10000000 	 157.58 ns per lock/unlock pair
+threads_count: 9 	 ITERATIONS: 10000000 	 157.00 ns per lock/unlock pair
+threads_count: 9 	 ITERATIONS: 10000000 	 156.80 ns per lock/unlock pair
+min: 151.35 	 median: 156.80 	 max: 157.58
+
+threads_count: 10 	 ITERATIONS: 10000000 	 154.33 ns per lock/unlock pair
+threads_count: 10 	 ITERATIONS: 10000000 	 154.06 ns per lock/unlock pair
+threads_count: 10 	 ITERATIONS: 10000000 	 154.53 ns per lock/unlock pair
+threads_count: 10 	 ITERATIONS: 10000000 	 153.68 ns per lock/unlock pair
+threads_count: 10 	 ITERATIONS: 10000000 	 153.98 ns per lock/unlock pair
+min: 153.68 	 median: 154.06 	 max: 154.53
+

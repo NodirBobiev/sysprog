@@ -1,0 +1,7 @@
+$ gcc pthread_create_join.c -o main && ./main
+ITERATIONS: 100000 	 14992.51 ns per create/join pair
+ITERATIONS: 100000 	 15234.25 ns per create/join pair
+ITERATIONS: 100000 	 15128.62 ns per create/join pair
+ITERATIONS: 100000 	 16062.12 ns per create/join pair
+ITERATIONS: 100000 	 15945.37 ns per create/join pair
+min: 14992.51 	 median: 15234.25 	 max: 16062.12

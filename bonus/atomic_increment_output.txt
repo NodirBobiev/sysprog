@@ -1,0 +1,36 @@
+$ gcc atomic_increment.c -o main && ./main
+1 thread and relaxed order: 	 4.60 ns per iteration
+1 thread and relaxed order: 	 4.58 ns per iteration
+1 thread and relaxed order: 	 4.61 ns per iteration
+1 thread and relaxed order: 	 4.68 ns per iteration
+1 thread and relaxed order: 	 4.79 ns per iteration
+min: 4.58 	 median: 4.61 	 max: 4.79
+
+2 threads and relaxed order: 	 13.43 ns per iteration
+2 threads and relaxed order: 	 12.36 ns per iteration
+2 threads and relaxed order: 	 12.62 ns per iteration
+2 threads and relaxed order: 	 12.55 ns per iteration
+2 threads and relaxed order: 	 12.54 ns per iteration
+min: 12.36 	 median: 12.55 	 max: 13.43
+
+2 threads and sequentially consistent: 	 13.49 ns per iteration
+2 threads and sequentially consistent: 	 13.51 ns per iteration
+2 threads and sequentially consistent: 	 12.66 ns per iteration
+2 threads and sequentially consistent: 	 12.63 ns per iteration
+2 threads and sequentially consistent: 	 12.21 ns per iteration
+min: 12.21 	 median: 12.66 	 max: 13.51
+
+3 threads and relaxed order: 	 15.66 ns per iteration
+3 threads and relaxed order: 	 15.29 ns per iteration
+3 threads and relaxed order: 	 15.82 ns per iteration
+3 threads and relaxed order: 	 15.33 ns per iteration
+3 threads and relaxed order: 	 14.09 ns per iteration
+min: 14.09 	 median: 15.33 	 max: 15.82
+
+3 threads and sequentially consistent: 	 15.61 ns per iteration
+3 threads and sequentially consistent: 	 15.59 ns per iteration
+3 threads and sequentially consistent: 	 15.61 ns per iteration
+3 threads and sequentially consistent: 	 15.76 ns per iteration
+3 threads and sequentially consistent: 	 15.37 ns per iteration
+min: 15.37 	 median: 15.61 	 max: 15.76
+

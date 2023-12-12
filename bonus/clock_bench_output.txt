@@ -1,0 +1,22 @@
+$ gcc clock_bench.c -o main && ./main
+      CLOCK_REALTIME: 	 13.08 ns per call
+      CLOCK_REALTIME: 	 13.06 ns per call
+      CLOCK_REALTIME: 	 13.06 ns per call
+      CLOCK_REALTIME: 	 13.10 ns per call
+      CLOCK_REALTIME: 	 13.05 ns per call
+min: 13.05 	 median: 13.06 	 max: 13.10
+
+     CLOCK_MONOTONIC: 	 13.06 ns per call
+     CLOCK_MONOTONIC: 	 13.07 ns per call
+     CLOCK_MONOTONIC: 	 13.06 ns per call
+     CLOCK_MONOTONIC: 	 13.07 ns per call
+     CLOCK_MONOTONIC: 	 13.06 ns per call
+min: 13.06 	 median: 13.06 	 max: 13.07
+
+ CLOCK_MONOTONIC_RAW: 	 13.28 ns per call
+ CLOCK_MONOTONIC_RAW: 	 13.28 ns per call
+ CLOCK_MONOTONIC_RAW: 	 13.28 ns per call
+ CLOCK_MONOTONIC_RAW: 	 13.29 ns per call
+ CLOCK_MONOTONIC_RAW: 	 13.38 ns per call
+min: 13.28 	 median: 13.28 	 max: 13.38
+

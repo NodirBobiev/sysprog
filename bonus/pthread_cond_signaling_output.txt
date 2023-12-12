@@ -1,0 +1,58 @@
+$ gcc pthread_cond_signaling.c -o main && ./main
+label: signal 1 wait-thread 	 	 totalTime: 138955145 ns
+label: signal 1 wait-thread 	 	 totalTime: 114026344 ns
+label: signal 1 wait-thread 	 	 totalTime: 54346124 ns
+label: signal 1 wait-thread 	 	 totalTime: 131938524 ns
+label: signal 1 wait-thread 	 	 totalTime: 107129878 ns
+min: 54346124 	 median: 114026344 	 max: 138955145
+
+label: broadcast 1 wait-thread 	 	 totalTime: 150630030 ns
+label: broadcast 1 wait-thread 	 	 totalTime: 81393895 ns
+label: broadcast 1 wait-thread 	 	 totalTime: 73822623 ns
+label: broadcast 1 wait-thread 	 	 totalTime: 103572769 ns
+label: broadcast 1 wait-thread 	 	 totalTime: 88266413 ns
+min: 73822623 	 median: 88266413 	 max: 150630030
+
+label: signal 2 wait-thread 	 	 totalTime: 146640089 ns
+label: signal 2 wait-thread 	 	 totalTime: 167123617 ns
+label: signal 2 wait-thread 	 	 totalTime: 146019023 ns
+label: signal 2 wait-thread 	 	 totalTime: 150702869 ns
+label: signal 2 wait-thread 	 	 totalTime: 121450043 ns
+min: 121450043 	 median: 146640089 	 max: 167123617
+
+label: broadcast 2 wait-thread 	 	 totalTime: 119171937 ns
+label: broadcast 2 wait-thread 	 	 totalTime: 104677667 ns
+label: broadcast 2 wait-thread 	 	 totalTime: 109423776 ns
+label: broadcast 2 wait-thread 	 	 totalTime: 99939654 ns
+label: broadcast 2 wait-thread 	 	 totalTime: 117813298 ns
+min: 99939654 	 median: 109423776 	 max: 119171937
+
+label: signal 3 wait-thread 	 	 totalTime: 211517890 ns
+label: signal 3 wait-thread 	 	 totalTime: 205190080 ns
+label: signal 3 wait-thread 	 	 totalTime: 206358770 ns
+label: signal 3 wait-thread 	 	 totalTime: 206758503 ns
+label: signal 3 wait-thread 	 	 totalTime: 196470477 ns
+min: 196470477 	 median: 206358770 	 max: 211517890
+
+label: broadcast 3 wait-thread 	 	 totalTime: 163574948 ns
+label: broadcast 3 wait-thread 	 	 totalTime: 174617808 ns
+label: broadcast 3 wait-thread 	 	 totalTime: 189081749 ns
+label: broadcast 3 wait-thread 	 	 totalTime: 174215208 ns
+label: broadcast 3 wait-thread 	 	 totalTime: 164061521 ns
+min: 163574948 	 median: 174215208 	 max: 189081749
+
+label: signal 4 wait-thread 	 	 totalTime: 231522340 ns
+label: signal 4 wait-thread 	 	 totalTime: 238121122 ns
+label: signal 4 wait-thread 	 	 totalTime: 240192110 ns
+label: signal 4 wait-thread 	 	 totalTime: 218763367 ns
+label: signal 4 wait-thread 	 	 totalTime: 227657477 ns
+min: 218763367 	 median: 231522340 	 max: 240192110
+
+label: broadcast 4 wait-thread 	 	 totalTime: 214689613 ns
+label: broadcast 4 wait-thread 	 	 totalTime: 217166537 ns
+label: broadcast 4 wait-thread 	 	 totalTime: 211465602 ns
+label: broadcast 4 wait-thread 	 	 totalTime: 220520137 ns
+label: broadcast 4 wait-thread 	 	 totalTime: 207675682 ns
+min: 207675682 	 median: 214689613 	 max: 220520137
+
+
