@@ -1,7 +1,8 @@
 #pragma once
 
 #include <stdbool.h>
-
+#define NEED_DETACH
+#define NEED_TIMED_JOIN
 /**
  * Here you should specify which features do you want to implement via macros:
  * NEED_DETACH and NEED_TIMED_JOIN. If you want to enable detach, do:
@@ -34,6 +35,7 @@ enum thread_poool_errcode {
 	TPOOL_ERR_TASK_IN_POOL,
 	TPOOL_ERR_NOT_IMPLEMENTED,
 	TPOOL_ERR_TIMEOUT,
+	TPOOL_ERR_TASK_DETACHED,
 };
 
 /** Thread pool API. */

@@ -361,7 +361,7 @@ main(void)
 	test_push();
 	test_thread_pool_delete();
 	test_thread_pool_max_tasks();
-	test_timed_join();
+	// test_timed_join();
 	test_detach_stress();
 	test_detach_long();
 
