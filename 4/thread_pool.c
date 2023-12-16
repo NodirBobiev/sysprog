@@ -173,6 +173,8 @@ thread_pool_new(int max_thread_count, struct thread_pool **pool)
 	new_pool->busy_threads_count = 0;
 	new_pool->task_count = 0;
 	new_pool->is_shutdown = false;
+	new_pool->tail_task = NULL;
+	new_pool->head_task = NULL;
 	new_pool->mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 	new_pool->cond = (pthread_cond_t *)malloc(sizeof(pthread_cond_t));
 	pthread_mutex_init(new_pool->mutex, NULL);
