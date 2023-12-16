@@ -19,13 +19,14 @@ void *thread_worker(void *args_ptr)
     struct thread_worker_args *args = (struct thread_worker_args*)(args_ptr);
     int distance = args->distance;  
     int thread_id = args->thread_id;
-
-    for (int i = 0; i < ITERATIONS; i ++ ){
-        volatile int dummy;
-        if (dummy == 1){
-            dummy = 0;
-        }else{
-            dummy = 1;
+    volatile int i = 0;
+    volatile int dummy = 0;
+    for (i = 0; i < ITERATIONS; i ++ ){
+        if( i % 2 == 0 ){   
+            dummy ++;
+        } 
+        else{
+            dummy -= 3;
         }
         shared_array[thread_id * distance] ++;
     }
