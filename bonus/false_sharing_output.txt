@@ -1,37 +1,75 @@
-$ gcc false_sharing.c -o main && ./main
-100 mln increments with 1 thread                                       19063728 ns 
-100 mln increments with 1 thread                                       18899012 ns 
-100 mln increments with 1 thread                                       18866823 ns 
-100 mln increments with 1 thread                                       18079577 ns 
-100 mln increments with 1 thread                                       18186550 ns 
-min: 18079577 	 median: 18866823 	 max: 19063728
+Without -O3 optimization flag:
 
-100 mln increments with 2 thread with close numbers                    32977416 ns 
-100 mln increments with 2 thread with close numbers                    38379160 ns 
-100 mln increments with 2 thread with close numbers                    38677971 ns 
-100 mln increments with 2 thread with close numbers                    40168770 ns 
-100 mln increments with 2 thread with close numbers                    39465329 ns 
-min: 32977416 	 median: 38677971 	 max: 40168770
+bobievnodir@bobievnodir-nu:~/iu/sysprog/bonus$ gcc false_sharing.c -o main && ./main
+100 mln increments with 1 thread                                       21827184 ns 
+100 mln increments with 1 thread                                       17745180 ns 
+100 mln increments with 1 thread                                       18233861 ns 
+100 mln increments with 1 thread                                       18305336 ns 
+100 mln increments with 1 thread                                       18293501 ns 
+min: 17745180 	 median: 18293501 	 max: 21827184
 
-100 mln increments with 2 thread with distant numbers                  18504833 ns 
-100 mln increments with 2 thread with distant numbers                  18395287 ns 
-100 mln increments with 2 thread with distant numbers                  18304872 ns 
-100 mln increments with 2 thread with distant numbers                  18593778 ns 
-100 mln increments with 2 thread with distant numbers                  18303594 ns 
-min: 18303594 	 median: 18395287 	 max: 18593778
+100 mln increments with 2 thread with close numbers                    37308999 ns 
+100 mln increments with 2 thread with close numbers                    31875044 ns 
+100 mln increments with 2 thread with close numbers                    30851805 ns 
+100 mln increments with 2 thread with close numbers                    30357030 ns 
+100 mln increments with 2 thread with close numbers                    32602202 ns 
+min: 30357030 	 median: 31875044 	 max: 37308999
 
-100 mln increments with 3 thread with close numbers                    66017788 ns 
-100 mln increments with 3 thread with close numbers                    60812620 ns 
-100 mln increments with 3 thread with close numbers                    64940842 ns 
-100 mln increments with 3 thread with close numbers                    59761653 ns 
-100 mln increments with 3 thread with close numbers                    65308818 ns 
-min: 59761653 	 median: 64940842 	 max: 66017788
+100 mln increments with 2 thread with distant numbers                  18325219 ns 
+100 mln increments with 2 thread with distant numbers                  18671855 ns 
+100 mln increments with 2 thread with distant numbers                  19191280 ns 
+100 mln increments with 2 thread with distant numbers                  18358780 ns 
+100 mln increments with 2 thread with distant numbers                  18426476 ns 
+min: 18325219 	 median: 18426476 	 max: 19191280
 
-100 mln increments with 3 thread with distant numbers                  19895286 ns 
-100 mln increments with 3 thread with distant numbers                  19939688 ns 
-100 mln increments with 3 thread with distant numbers                  19993449 ns 
-100 mln increments with 3 thread with distant numbers                  19886295 ns 
-100 mln increments with 3 thread with distant numbers                  19858292 ns 
-min: 19858292 	 median: 19895286 	 max: 19993449
+100 mln increments with 3 thread with close numbers                    51034287 ns 
+100 mln increments with 3 thread with close numbers                    48989182 ns 
+100 mln increments with 3 thread with close numbers                    49154339 ns 
+100 mln increments with 3 thread with close numbers                    49963574 ns 
+100 mln increments with 3 thread with close numbers                    49047906 ns 
+min: 48989182 	 median: 49154339 	 max: 51034287
+
+100 mln increments with 3 thread with distant numbers                  19593409 ns 
+100 mln increments with 3 thread with distant numbers                  19484933 ns 
+100 mln increments with 3 thread with distant numbers                  19393106 ns 
+100 mln increments with 3 thread with distant numbers                  19672655 ns 
+100 mln increments with 3 thread with distant numbers                  19516364 ns 
+min: 19393106 	 median: 19516364 	 max: 19672655
 
 
+With -O3 optimization flag:
+bobievnodir@bobievnodir-nu:~/iu/sysprog/bonus$ gcc -O3 false_sharing.c -o main && ./main
+100 mln increments with 1 thread                                       19546902 ns 
+100 mln increments with 1 thread                                       18641693 ns 
+100 mln increments with 1 thread                                       16762785 ns 
+100 mln increments with 1 thread                                       17783847 ns 
+100 mln increments with 1 thread                                       17775669 ns 
+min: 16762785 	 median: 17783847 	 max: 19546902
+
+100 mln increments with 2 thread with close numbers                    31859919 ns 
+100 mln increments with 2 thread with close numbers                    32243211 ns 
+100 mln increments with 2 thread with close numbers                    32740862 ns 
+100 mln increments with 2 thread with close numbers                    31110619 ns 
+100 mln increments with 2 thread with close numbers                    31280542 ns 
+min: 31110619 	 median: 31859919 	 max: 32740862
+
+100 mln increments with 2 thread with distant numbers                  18695523 ns 
+100 mln increments with 2 thread with distant numbers                  18071284 ns 
+100 mln increments with 2 thread with distant numbers                  18161178 ns 
+100 mln increments with 2 thread with distant numbers                  17764900 ns 
+100 mln increments with 2 thread with distant numbers                  17989145 ns 
+min: 17764900 	 median: 18071284 	 max: 18695523
+
+100 mln increments with 3 thread with close numbers                    59262955 ns 
+100 mln increments with 3 thread with close numbers                    59061331 ns 
+100 mln increments with 3 thread with close numbers                    62085135 ns 
+100 mln increments with 3 thread with close numbers                    59850204 ns 
+100 mln increments with 3 thread with close numbers                    59606612 ns 
+min: 59061331 	 median: 59606612 	 max: 62085135
+
+100 mln increments with 3 thread with distant numbers                  19268055 ns 
+100 mln increments with 3 thread with distant numbers                  18894592 ns 
+100 mln increments with 3 thread with distant numbers                  19054196 ns 
+100 mln increments with 3 thread with distant numbers                  19263286 ns 
+100 mln increments with 3 thread with distant numbers                  19385083 ns 
+min: 18894592 	 median: 19263286 	 max: 19385083

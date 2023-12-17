@@ -6,7 +6,7 @@
 #define ITERATIONS 10000000
 
 
-uint64_t shared_array[1000];
+volatile int shared_array[1000];
 
 
 struct thread_worker_args{
@@ -20,14 +20,7 @@ void *thread_worker(void *args_ptr)
     int distance = args->distance;  
     int thread_id = args->thread_id;
     volatile int i = 0;
-    volatile int dummy = 0;
     for (i = 0; i < ITERATIONS; i ++ ){
-        if( i % 2 == 0 ){   
-            dummy ++;
-        } 
-        else{
-            dummy -= 3;
-        }
         shared_array[thread_id * distance] ++;
     }
 
@@ -79,9 +72,9 @@ struct bench_param{
 struct bench_param parameters[]={
     {"100 mln increments with 1 thread", 1, 1},
     {"100 mln increments with 2 thread with close numbers", 2, 1},
-    {"100 mln increments with 2 thread with distant numbers", 2, 9},
+    {"100 mln increments with 2 thread with distant numbers", 2, 20},
     {"100 mln increments with 3 thread with close numbers", 3, 1},
-    {"100 mln increments with 3 thread with distant numbers", 3, 9},
+    {"100 mln increments with 3 thread with distant numbers", 3, 20},
 };
 
 
